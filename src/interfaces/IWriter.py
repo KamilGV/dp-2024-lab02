@@ -10,6 +10,7 @@ class IWriter(ABC):
         Методы:
         write(level, message): Записывает сообщение с заданным уровнем.
     """
+
     @abstractmethod
     def write(self, message: str) -> None:
         """

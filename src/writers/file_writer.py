@@ -21,5 +21,5 @@ class FileWriter(IWriter):
         :param message: Сообщение.
         :return: None.
         """
-        with open(self._file_path, 'a') as f:
+        with open(self._file_path, "a") as f:
             f.write(f"{message}\n")

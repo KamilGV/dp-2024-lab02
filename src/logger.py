@@ -8,6 +8,7 @@ from src.interfaces import ILogger, IWriter, IFormatter
 
 # Mock writer`a
 
+
 class Logger(ILogger):
     """
     Класс для управления логированием сообщений
@@ -20,6 +21,7 @@ class Logger(ILogger):
     Методы:
         log(level, message): Записывает сообщение с заданным уровнем.
     """
+
     _instance = None
     _mutex_create = threading.Lock()
     _mutex_write = threading.Lock()

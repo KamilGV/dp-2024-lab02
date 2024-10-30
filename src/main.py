@@ -16,7 +16,7 @@ from src.writers import ConsoleWriter, FileWriter
 fake = Faker()
 
 path = os.path.dirname(os.path.abspath(__file__))
-parent_path = os.path.abspath(os.path.join(path, '../../dp-2024-lab02'))
+parent_path = os.path.abspath(os.path.join(path, "../../dp-2024-lab02"))
 base_path = Path(parent_path)
 folder_path = base_path / "logs"
 
@@ -29,8 +29,6 @@ initial_formatter = InitialCaseFormatter()
 
 console_writer = ConsoleWriter()
 file_writer = FileWriter(file_path=file_path)
-print(file_path)
-
 
 
 def thread_func():
@@ -40,8 +38,10 @@ def thread_func():
     :return None
     """
     for i in range(3):
-        logger = Logger(formatter=random.choice([initial_formatter, upper_formatter]),
-                        writer=random.choice([file_writer, console_writer]))
+        logger = Logger(
+            formatter=random.choice([initial_formatter, upper_formatter]),
+            writer=random.choice([file_writer, console_writer]),
+        )
 
         message = fake.text(max_nb_chars=20)
         level = random.choice(list(Level))
@@ -59,5 +59,3 @@ if __name__ == "__main__":
 
     for thread in threads:
         thread.join()
-
-

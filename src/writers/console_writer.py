@@ -20,4 +20,3 @@ class ConsoleWriter(IWriter):
         :return: None.
         """
         print(message)
-
