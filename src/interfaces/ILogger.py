@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 
 from src.enums.level_enum import Level
-from src.interfaces import IWriter
+from .IMessageFormatter import IFormatter
+from .IWriter import IWriter
 
 
 class ILogger(ABC):
@@ -29,6 +30,16 @@ class ILogger(ABC):
         Метод для установки метода записи.
 
         :param writer: Метод записи.
+        :return: None.
+        """
+        pass
+
+    @abstractmethod
+    def set_message_format(self, formatter: IFormatter):
+        """
+        Метод для установки форматирования сообщения.
+
+        :param formatter: Метод форматирования.
         :return: None.
         """
         pass

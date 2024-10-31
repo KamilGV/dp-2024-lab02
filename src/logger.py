@@ -1,12 +1,9 @@
 from datetime import datetime
-import pathlib
 import threading
 
 
 from src.enums.level_enum import Level
 from src.interfaces import ILogger, IWriter, IFormatter
-
-# Mock writer`a
 
 
 class Logger(ILogger):
@@ -27,11 +24,7 @@ class Logger(ILogger):
     _mutex_write = threading.Lock()
 
     def __new__(cls, *args, **kwargs):
-        with cls._mutex_create:
-            if not cls._instance:
-                cls._instance = super().__new__(cls)
-
-            return cls._instance
+        return cls._create_singleton()
 
     def __init__(self, writer: IWriter, formatter: IFormatter):
         self._writer = writer
@@ -52,11 +45,11 @@ class Logger(ILogger):
         :return: None.
         """
 
-        log = self._genetare_log(message=message, level=level)
+        log = self._genetare_log_message(message=message, level=level)
         with self._mutex_write:
             self._writer.write(self._formatter.format(log))
 
-    def _genetare_log(self, message: str, level: Level):
+    def _genetare_log_message(self, message: str, level: Level) -> str:
         """
         Метод для формирования строки лога.
 
@@ -66,3 +59,11 @@ class Logger(ILogger):
         """
         time = str(datetime.now().strftime("%y-%m-%d %H:%M:%S"))
         return f"{time} [{level.value}] {message}"
+
+    @classmethod
+    def _create_singleton(cls):
+        with cls._mutex_create:
+            if not cls._instance:
+                cls._instance = super().__new__(cls)
+
+            return cls._instance
