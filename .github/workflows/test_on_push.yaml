@@ -6,6 +6,7 @@ on:
       - '!refs/tags/*'
     branches:
       - '*'
+    if: github.ref != 'refs/heads/main'
 
 jobs:
   run_tests:
