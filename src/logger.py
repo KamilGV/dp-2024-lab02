@@ -4,9 +4,10 @@ import threading
 
 from src.enums.level_enum import Level
 from src.interfaces import ILogger, IWriter, IFormatter
+from src.singleton import Singleton
 
 
-class Logger(ILogger):
+class Logger(ILogger, Singleton):
     """
     Класс для управления логированием сообщений
 
@@ -19,12 +20,7 @@ class Logger(ILogger):
         log(level, message): Записывает сообщение с заданным уровнем.
     """
 
-    _instance = None
-    _mutex_create = threading.Lock()
     _mutex_write = threading.Lock()
-
-    def __new__(cls, *args, **kwargs):
-        return cls._create_singleton()
 
     def __init__(self, writer: IWriter, formatter: IFormatter):
         self._writer = writer
@@ -60,10 +56,3 @@ class Logger(ILogger):
         time = str(datetime.now().strftime("%y-%m-%d %H:%M:%S"))
         return f"{time} [{level.value}] {message}"
 
-    @classmethod
-    def _create_singleton(cls):
-        with cls._mutex_create:
-            if not cls._instance:
-                cls._instance = super().__new__(cls)
-
-            return cls._instance
