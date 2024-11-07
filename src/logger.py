@@ -41,11 +41,11 @@ class Logger(ILogger, Singleton):
         :return: None.
         """
 
-        log = self._genetare_log_message(message=message, level=level)
+        log = self._generate_log_message(message=message, level=level)
         with self._mutex_write:
             self._writer.write(self._formatter.format(log))
 
-    def _genetare_log_message(self, message: str, level: Level) -> str:
+    def _generate_log_message(self, message: str, level: Level) -> str:
         """
         Метод для формирования строки лога.
 
